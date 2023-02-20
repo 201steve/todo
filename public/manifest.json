@@ -1,5 +1,5 @@
 {
-  "short_name": "React App",
+  "short_name": "menifest",
   "name": "Create React App Sample",
   "icons": [
     {
@@ -19,7 +19,7 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
+  "display": "browser",
+  "theme_color": "#463431",
   "background_color": "#ffffff"
 }
