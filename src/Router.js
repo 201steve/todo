@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import List from "./pages/List";
 import Auth from "./pages/Auth";
+import List from "./pages/list/List";
 
 const Router = () => {
   return (
