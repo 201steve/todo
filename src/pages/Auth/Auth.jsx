@@ -27,7 +27,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen max-w-md p-10 border-none">
+    <div className="flex flex-col items-center justify-center h-screen max-w-md p-10 border-none">
       <h1 className="mb-5 text-md">회원가입</h1>
 
       <form className="flex flex-col">
@@ -52,7 +52,7 @@ const Auth = () => {
           } rounded-md mb-5 focus:outline-none`}
         />
         <button
-          className="disabled:bg-red-100 enabled:bg-emerald-100 enabled:active:bg-emerald-300 rounded-md "
+          className="rounded-md disabled:bg-red-100 enabled:bg-emerald-100 enabled:active:bg-emerald-300 "
           type="button"
           disabled={!validation}
           onClick={signUp}
@@ -62,7 +62,7 @@ const Auth = () => {
       </form>
       <p className="mt-10">
         회원가입 했다면?{" "}
-        <Link className="border-b-2 border-b-emerald-200 px-2 py-1 " to="/signin">
+        <Link className="px-2 py-1 border-b-2 border-b-emerald-200 " to="/signin">
           로그인하러 가기
         </Link>
       </p>

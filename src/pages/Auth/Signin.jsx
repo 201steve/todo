@@ -39,9 +39,9 @@ const Signin = () => {
     navigate("/");
   };
   return (
-    <div className="flex flex-col justify-center items-center h-screen max-w-md p-10">
+    <div className="flex flex-col items-center justify-center h-screen max-w-md p-10">
       <div className="w-full text-right">
-        <button onClick={goToList} className="mr-5 mb-3 px-5 py-1 bg-zinc-300 rounded-lg">
+        <button onClick={goToList} className="px-5 py-1 mb-3 mr-5 rounded-lg bg-zinc-300">
           todoList
         </button>
       </div>
@@ -70,7 +70,7 @@ const Signin = () => {
           } rounded-md mb-5 focus:outline-none`}
         />
         <button
-          className="disabled:bg-red-100 enabled:bg-emerald-100 enabled:active:bg-emerald-300 rounded-md "
+          className="rounded-md disabled:bg-red-100 enabled:bg-emerald-100 enabled:active:bg-emerald-300 "
           type="submit"
           disabled={!validation}
           onClick={signUp}
@@ -80,7 +80,7 @@ const Signin = () => {
       </form>
       <p className="mt-10">
         아직 가입하지않았다면
-        <Link className="border-b-2 border-b-emerald-200 px-2 py-1 " to="/auth">
+        <Link className="px-2 py-1 border-b-2 border-b-emerald-200 " to="/auth">
           회원가입하러 가기
         </Link>
       </p>
