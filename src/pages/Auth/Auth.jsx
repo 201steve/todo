@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { api } from "../../api/api";
 
 const Auth = () => {
   const [userInfo, setUserInfo] = useState({
@@ -16,7 +17,7 @@ const Auth = () => {
   const validation = email.includes("@") && password.length >= 8;
 
   const signUp = async () => {
-    const response = await fetch("http://localhost:8080/users/create", {
+    const response = await fetch(api.signUp, {
       method: "POST",
       headers: { "Content-type": "application/json;charset=utf-8" },
       body: JSON.stringify(userInfo),
@@ -26,7 +27,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center max-w-md p-10 border-2 border-emerald-300">
+    <div className="flex flex-col justify-center items-center h-screen max-w-md p-10 border-none">
       <h1 className="mb-5 text-md">회원가입</h1>
 
       <form className="flex flex-col">
