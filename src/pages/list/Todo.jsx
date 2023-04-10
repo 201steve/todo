@@ -1,14 +1,19 @@
 import React from "react";
 import { CiEdit, CiSquareRemove } from "react-icons/ci";
 
-const Todo = ({ title, content, labelId }) => {
+const Todo = ({ title, id, whichISelected, selectOrNot }) => {
   return (
-    <div className="flex items-center justify-center h-10 mb-5  group">
-      <label htmlFor={labelId} className="w-full h-10 ml-5">
+    <div
+      onClick={(e) => {
+        whichISelected(e, id);
+      }}
+      className="flex items-center justify-center h-10 mb-5 group"
+    >
+      <label htmlFor={id} className="w-full h-10 ml-5">
         <div className="flex items-center h-10 py-5 border-2 border-emerald-200 duration-150 active:scale-105 ">
-          <input id={labelId} type="checkbox" className="mx-5" />
+          <input id={id} type="checkbox" className="mx-5" onChange={selectOrNot} />
           <p type="text" className=" focus:outline-none duration-150 focus:scale-110">
-            {content}
+            {title}
           </p>
         </div>
       </label>
