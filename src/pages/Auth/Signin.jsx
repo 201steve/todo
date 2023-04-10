@@ -34,8 +34,18 @@ const Signin = () => {
       navigate("/");
     }
   };
+
+  const goToList = () => {
+    navigate("/");
+  };
   return (
-    <div className="flex flex-col justify-center items-center max-w-md p-10 border-2 border-emerald-300">
+    <div className="flex flex-col justify-center items-center h-screen max-w-md p-10">
+      <div className="w-full text-right">
+        <button onClick={goToList} className="mr-5 mb-3 px-5 py-1 bg-zinc-300 rounded-lg">
+          todoList
+        </button>
+      </div>
+
       <h1 className="mb-5 text-md">로그인</h1>
 
       <form className="flex flex-col" onSubmit={signUp}>
