@@ -5,6 +5,9 @@ import { api } from "../../api/api";
 
 const List = () => {
   const [todoList, setTodoList] = useState([]);
+  const [selectedTodo, setSelectedTodo] = useState({});
+  const [isTodoChecked, setIsTodoChecked] = useState(false);
+
   const navigate = useNavigate();
 
   const getTodo = async (url, option) => {
@@ -15,6 +18,15 @@ const List = () => {
 
   const goToSignIn = () => {
     navigate("signin");
+  };
+
+  const whichISelected = (e, selectedId) => {
+    const selectedTodo = todoList.find(({ id }) => id === selectedId);
+    setSelectedTodo(selectedTodo);
+  };
+
+  const selectOrNot = (e) => {
+    setIsTodoChecked(e.target.checked);
   };
 
   useEffect(() => {
@@ -29,6 +41,15 @@ const List = () => {
         Authorization: localStorage.getItem("todo-token"),
       },
     });
+    getTodo("/mock/getTodo.json");
+    //TODO: createTodo 만들어지면 사용 예정
+    // getTodo(api.getTodos, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-type": "application/json;charset=utf-8",
+    //     Authorization: localStorage.getItem("todo-token"),
+    //   },
+    // });
   }, []);
 
   return (
@@ -44,9 +65,17 @@ const List = () => {
           +
         </button>
       </div>
-      {todoList.map(({ id, content, title }) => (
-        <Todo key={id} content={content} title={title} labelId={id} text={"Bernard Shelton"} />
+      {todoList.map(({ id, title }) => (
+        <Todo
+          key={id}
+          title={title}
+          id={id}
+          text={"Bernard Shelton"}
+          whichISelected={whichISelected}
+          selectOrNot={selectOrNot}
+        />
       ))}
+      {isTodoChecked && <div className="bg-emerald-100 mx-5">{selectedTodo.content}</div>}
     </div>
   );
 };
