@@ -5,8 +5,8 @@ import { api } from "../../api/api";
 
 const List = () => {
   const [todoList, setTodoList] = useState([]);
+  const [isSelected, setIsSelected] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState({});
-  const [isTodoChecked, setIsTodoChecked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -20,13 +20,16 @@ const List = () => {
     navigate("signin");
   };
 
+  const displayDetail = () => {
+    setIsSelected(true);
+  };
+  const hiddenDetail = () => {
+    setIsSelected(false);
+  };
+
   const whichISelected = (e, selectedId) => {
     const selectedTodo = todoList.find(({ id }) => id === selectedId);
     setSelectedTodo(selectedTodo);
-  };
-
-  const selectOrNot = (e) => {
-    setIsTodoChecked(e.target.checked);
   };
 
   useEffect(() => {
@@ -51,7 +54,6 @@ const List = () => {
     //   },
     // });
   }, []);
-
   return (
     <div className="m-10 max-w-2xl border-2 rounded-lg pb-10">
       <div className="w-full text-right p-4">
@@ -65,17 +67,29 @@ const List = () => {
           +
         </button>
       </div>
-      {todoList.map(({ id, title }) => (
-        <Todo
-          key={id}
-          title={title}
-          id={id}
-          text={"Bernard Shelton"}
-          whichISelected={whichISelected}
-          selectOrNot={selectOrNot}
-        />
-      ))}
-      {isTodoChecked && <div className="bg-emerald-100 mx-5">{selectedTodo.content}</div>}
+      {todoList &&
+        todoList.map(({ id, title }) => (
+          <Todo
+            key={id}
+            title={title}
+            id={id}
+            whichISelected={whichISelected}
+            displayDetail={displayDetail}
+          />
+        ))}
+      {isSelected && (
+        <div className="flex items-start justify-between rounded-lg p-3 bg-emerald-50 mx-5">
+          <p className="w-full p-3 border-2 rounded-lg text-sm break-words">
+            {selectedTodo.content}
+          </p>
+          <button
+            onClick={hiddenDetail}
+            className="w-1/6 h-10 ml-5 bg-zinc-100  active:bg-zinc-300 active:text-white rounded-lg text-sm"
+          >
+            닫기
+          </button>
+        </div>
+      )}
     </div>
   );
 };
