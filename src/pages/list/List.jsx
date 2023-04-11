@@ -41,7 +41,6 @@ const List = () => {
     }
     getTodo();
   }, []);
-
   return (
     <div className="relative max-w-2xl pb-10 m-10 border-2 rounded-lg">
       <div className="w-full p-4 text-right">
