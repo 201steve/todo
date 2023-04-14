@@ -23,7 +23,7 @@ const Auth = () => {
       body: JSON.stringify(userInfo),
     });
     const createdUser = await response.json();
-    console.log(createdUser.message);
+    alert(createdUser.message);
   };
 
   return (
