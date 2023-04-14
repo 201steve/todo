@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Todo from "./Todo";
 import { api } from "../../api/api";
+import TodoModal from "./TodoModal/TodoModal";
 
 const List = () => {
   const [todoList, setTodoList] = useState([]);
   const [isSelected, setIsSelected] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState({});
+  const [isOpend, setIsOpend] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,6 +34,10 @@ const List = () => {
     setSelectedTodo(selectedTodo);
   };
 
+  const toggleTodoModal = () => {
+    setIsOpend((prev) => !prev);
+  };
+
   useEffect(() => {
     if (!localStorage.getItem("todo-token")) {
       alert("로그인이 필요합니다");
@@ -44,18 +50,9 @@ const List = () => {
         Authorization: localStorage.getItem("todo-token"),
       },
     });
-    getTodo("/mock/getTodo.json");
-    //TODO: createTodo 만들어지면 사용 예정
-    // getTodo(api.getTodos, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-type": "application/json;charset=utf-8",
-    //     Authorization: localStorage.getItem("todo-token"),
-    //   },
-    // });
-  }, []);
+  }, [todoList]);
   return (
-    <div className="m-10 max-w-2xl border-2 rounded-lg pb-10">
+    <div className="relative m-10 max-w-2xl border-2 rounded-lg pb-10">
       <div className="w-full text-right p-4">
         <button
           onClick={goToSignIn}
@@ -63,10 +60,14 @@ const List = () => {
         >
           Login
         </button>
-        <button className="text-md bg-zinc-100 rounded-lg px-3 py-1 active:bg-zinc-300 active:text-white">
+        <button
+          onClick={toggleTodoModal}
+          className="text-md bg-zinc-100 rounded-lg px-3 py-1 active:bg-zinc-300 active:text-white"
+        >
           +
         </button>
       </div>
+      {isOpend && <TodoModal setIsOpend={setIsOpend} />}
       {todoList &&
         todoList.map(({ id, title }) => (
           <Todo
@@ -80,7 +81,7 @@ const List = () => {
       {isSelected && (
         <div className="flex items-start justify-between rounded-lg p-3 bg-emerald-50 mx-5">
           <p className="w-full p-3 border-2 rounded-lg text-sm break-words">
-            {selectedTodo.content}
+            {selectedTodo.content || "todoDetail입니다"}
           </p>
           <button
             onClick={hiddenDetail}
