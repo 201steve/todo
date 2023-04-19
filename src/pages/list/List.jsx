@@ -6,10 +6,9 @@ import TodoModal from "./TodoModal/TodoModal";
 
 const List = () => {
   const [todoList, setTodoList] = useState([]);
-  const [isSelected, setIsSelected] = useState(false);
+  const [isTodoSelected, setIsTodoSelected] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState({});
-  const [isOpend, setIsOpend] = useState(false);
-
+  const [isTodoModalOpend, setTodoModalIsOpend] = useState(false);
   const navigate = useNavigate();
 
   const getTodo = async (url, option) => {
@@ -23,10 +22,10 @@ const List = () => {
   };
 
   const displayDetail = () => {
-    setIsSelected(true);
+    setIsTodoSelected(true);
   };
   const hiddenDetail = () => {
-    setIsSelected(false);
+    setIsTodoSelected(false);
   };
 
   const whichISelected = (e, selectedId) => {
@@ -35,7 +34,21 @@ const List = () => {
   };
 
   const toggleTodoModal = () => {
-    setIsOpend((prev) => !prev);
+    setTodoModalIsOpend((prev) => !prev);
+  };
+
+  const deleteTodo = async (e, selectedId) => {
+    const response = await fetch(`${api.deleteTodo}${selectedId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: localStorage.getItem("todo-token"),
+      },
+    });
+    if (response.ok) {
+      const filteredList = todoList.filter((list) => list.id !== selectedId);
+      setTodoList(filteredList);
+    }
   };
 
   useEffect(() => {
@@ -50,7 +63,12 @@ const List = () => {
         Authorization: localStorage.getItem("todo-token"),
       },
     });
+  }, []);
+
+  useEffect(() => {
+    if (todoList.length === 0) setIsTodoSelected(false);
   }, [todoList]);
+
   return (
     <div className="relative m-10 max-w-2xl border-2 rounded-lg pb-10">
       <div className="w-full text-right p-4">
@@ -67,7 +85,9 @@ const List = () => {
           +
         </button>
       </div>
-      {isOpend && <TodoModal setIsOpend={setIsOpend} />}
+      {isTodoModalOpend && (
+        <TodoModal setTodoModalIsOpend={setTodoModalIsOpend} setTodoList={setTodoList} />
+      )}
       {todoList &&
         todoList.map(({ id, title }) => (
           <Todo
@@ -76,9 +96,10 @@ const List = () => {
             id={id}
             whichISelected={whichISelected}
             displayDetail={displayDetail}
+            deleteTodo={deleteTodo}
           />
         ))}
-      {isSelected && (
+      {isTodoSelected && (
         <div className="flex items-start justify-between rounded-lg p-3 bg-emerald-50 mx-5">
           <p className="w-full p-3 border-2 rounded-lg text-sm break-words">
             {selectedTodo.content || "todoDetail입니다"}

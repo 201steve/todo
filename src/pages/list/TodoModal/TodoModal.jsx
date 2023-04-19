@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { api } from "../../../api/api";
 
-const TodoModal = ({ setIsOpend }) => {
+const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
   const [todo, setTodo] = useState({ title: "", content: "" });
   const { title, content } = todo;
 
@@ -24,14 +24,16 @@ const TodoModal = ({ setIsOpend }) => {
       }),
     });
     if (!res.ok) return alert("다시 시도해 주세요");
-
+    const todoData = await res.json();
+    console.log(todoData.data);
     alert("todo가 생성되었습니다");
+    setTodoModalIsOpend((prev) => !prev);
+    setTodoList((prev) => [...prev, todoData.data]);
   };
 
   const submitTodo = (e) => {
     e.preventDefault();
     createTodo();
-    setIsOpend(false);
   };
 
   useEffect(() => {
