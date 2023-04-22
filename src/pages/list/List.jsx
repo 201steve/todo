@@ -9,6 +9,7 @@ const List = () => {
   const [isTodoSelected, setIsTodoSelected] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState({});
   const [isTodoModalOpend, setTodoModalIsOpend] = useState(false);
+
   const navigate = useNavigate();
 
   const getTodo = async (url, option) => {
@@ -70,17 +71,17 @@ const List = () => {
   }, [todoList]);
 
   return (
-    <div className="relative m-10 max-w-2xl border-2 rounded-lg pb-10">
-      <div className="w-full text-right p-4">
+    <div className="relative max-w-2xl pb-10 m-10 border-2 rounded-lg">
+      <div className="w-full p-4 text-right">
         <button
           onClick={goToSignIn}
-          className="text-md bg-zinc-100 rounded-lg px-3 py-1 mr-3 active:bg-zinc-300 active:text-white"
+          className="px-3 py-1 mr-3 rounded-lg text-md bg-zinc-100 active:bg-zinc-300 active:text-white"
         >
           Login
         </button>
         <button
           onClick={toggleTodoModal}
-          className="text-md bg-zinc-100 rounded-lg px-3 py-1 active:bg-zinc-300 active:text-white"
+          className="px-3 py-1 rounded-lg text-md bg-zinc-100 active:bg-zinc-300 active:text-white"
         >
           +
         </button>
@@ -88,25 +89,27 @@ const List = () => {
       {isTodoModalOpend && (
         <TodoModal setTodoModalIsOpend={setTodoModalIsOpend} setTodoList={setTodoList} />
       )}
-      {todoList &&
-        todoList.map(({ id, title }) => (
-          <Todo
-            key={id}
-            title={title}
-            id={id}
-            whichISelected={whichISelected}
-            displayDetail={displayDetail}
-            deleteTodo={deleteTodo}
-          />
-        ))}
+      {todoList?.map(({ id, title, content }) => (
+        <Todo
+          key={id}
+          id={id}
+          title={title}
+          content={content}
+          todoList={todoList}
+          whichISelected={whichISelected}
+          displayDetail={displayDetail}
+          deleteTodo={deleteTodo}
+          setTodoList={setTodoList}
+        />
+      ))}
       {isTodoSelected && (
-        <div className="flex items-start justify-between rounded-lg p-3 bg-emerald-50 mx-5">
-          <p className="w-full p-3 border-2 rounded-lg text-sm break-words">
+        <div className="flex items-start justify-between p-3 mx-5 rounded-lg bg-emerald-50">
+          <p className="w-full p-3 text-sm break-words border-2 rounded-lg">
             {selectedTodo.content || "todoDetail입니다"}
           </p>
           <button
             onClick={hiddenDetail}
-            className="w-1/6 h-10 ml-5 bg-zinc-100  active:bg-zinc-300 active:text-white rounded-lg text-sm"
+            className="w-1/6 h-10 ml-5 text-sm rounded-lg bg-zinc-100 active:bg-zinc-300 active:text-white"
           >
             닫기
           </button>
