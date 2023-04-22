@@ -8,7 +8,6 @@ import { client } from "api/client";
 const List = () => {
   const [todoList, setTodoList] = useState([]);
   const [isTodoModalOpend, setTodoModalIsOpend] = useState(false);
-  console.log(todoList);
   const navigate = useNavigate();
 
   const { id } = useParams();
