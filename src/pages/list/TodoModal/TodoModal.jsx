@@ -9,6 +9,7 @@ const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
   const modalRef = useRef(null);
 
   const getNewTodo = ({ target: { placeholder, value } }) => {
+    console.log("aaa");
     setTodo({ ...todo, [placeholder]: value });
   };
 
