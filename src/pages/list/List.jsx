@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Todo from "./Todo/Todo";
 import { api } from "../../api/api";
 import TodoModal from "./TodoModal/TodoModal";
@@ -11,6 +11,11 @@ const List = () => {
   const [isTodoModalOpend, setTodoModalIsOpend] = useState(false);
 
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const selectedDetail = todoList.find((todo) => todo.id === id);
+
+  console.log(selectedDetail?.id === id);
 
   const getTodo = async (url, option) => {
     const response = await fetch(url, option);
@@ -65,9 +70,6 @@ const List = () => {
     if (todoList.length === 0) setIsTodoSelected(false);
   }, [todoList]);
 
-  useEffect(() => {
-    navigate("/");
-  }, []);
   return (
     <div className="relative max-w-2xl pb-10 m-10 border-2 rounded-lg">
       <div className="w-full p-4 text-right">
@@ -99,7 +101,7 @@ const List = () => {
           setTodoList={setTodoList}
         />
       ))}
-      {isTodoSelected && <TodoDetail todoList={todoList} hiddenDetail={hiddenDetail} />}
+      {id ? <TodoDetail todoList={todoList} hiddenDetail={hiddenDetail} /> : null}
     </div>
   );
 };

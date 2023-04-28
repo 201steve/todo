@@ -8,6 +8,7 @@ const Todo = ({ id, title, displayDetail, deleteTodo, content, todoList, setTodo
   const [isEdit, setIsEdit] = useState(false);
   const [editedTodo, setEditedTodo] = useState({ id: "", title: "", content: "" });
   const navigate = useNavigate();
+
   const getEditedTodo = (e) => {
     const { name, value } = e.target;
     setEditedTodo({ ...editedTodo, [name]: value });
