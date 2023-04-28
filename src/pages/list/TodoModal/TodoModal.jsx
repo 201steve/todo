@@ -8,6 +8,7 @@ const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
   const modalRef = useRef(null);
 
   const getNewTodo = ({ target: { placeholder, value } }) => {
+    console.log("aaa");
     setTodo({ ...todo, [placeholder]: value });
   };
 
@@ -40,7 +41,7 @@ const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
     modalRef.current.focus();
   }, []);
   return (
-    <div className="absolute top-1/2 left-1/2 w-3/4  bg-red-50 -translate-x-1/2 -translate-y-1/2 rounded-lg">
+    <div className="absolute w-3/4 -translate-x-1/2 -translate-y-1/2 rounded-lg top-1/2 left-1/2 bg-red-50">
       <form
         onSubmit={submitTodo}
         className="flex flex-col items-center justify-center px-3 rounded-lg"
@@ -50,18 +51,18 @@ const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
           ref={modalRef}
           value={title}
           placeholder="title"
-          className="pl-3 h-8 w-full my-3 rounded-lg"
+          className="w-full h-8 pl-3 my-3 rounded-lg"
         />
         <input
           onChange={getNewTodo}
           value={content}
           placeholder="content"
-          className="pl-3 h-8 w-full mb-3 rounded-lg"
+          className="w-full h-8 pl-3 mb-3 rounded-lg"
         />
         <button
           onClick={submitTodo}
           type="submit"
-          className="w-1/4 mb-3 py-1 bg-emerald-100 rounded-lg "
+          className="w-1/4 py-1 mb-3 rounded-lg bg-emerald-100 "
         >
           등록
         </button>

@@ -1,20 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CiEdit, CiSquareRemove } from "react-icons/ci";
-import { api } from "../../api/api";
+import { api } from "../../../api/api";
+import EditTodoForm from "./EditTodoForm/EditTodoForm";
 
-const Todo = ({
-  id,
-  title,
-  whichISelected,
-  displayDetail,
-  deleteTodo,
-  content,
-  todoList,
-  setTodoList,
-}) => {
+const Todo = ({ id, title, displayDetail, deleteTodo, content, todoList, setTodoList }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editedTodo, setEditedTodo] = useState({ id: "", title: "", content: "" });
-
+  const navigate = useNavigate();
   const getEditedTodo = (e) => {
     const { name, value } = e.target;
     setEditedTodo({ ...editedTodo, [name]: value });
@@ -26,7 +19,7 @@ const Todo = ({
   };
 
   const selectTodo = (e) => {
-    whichISelected(e, id);
+    navigate(`/${id}`);
   };
 
   const closeModal = () => {
@@ -44,7 +37,7 @@ const Todo = ({
 
   const submitEditedTodo = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${api.updateTodo}${id}`, {
+    const response = await fetch(`${api.updateTodo(id)}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
@@ -80,36 +73,14 @@ const Todo = ({
             <span className="inline-block h-5 mb-5 font-bold text-white rounded-lg">
               todo 수정하기
             </span>
-            <form onSubmit={submitEditedTodo} className="flex flex-col mb-5">
-              <input
-                placeholder={title}
-                name="title"
-                className="pl-3 mb-3 border-2 rounded-lg h-14 border-emerald-200"
-                onChange={getEditedTodo}
-              />
-              <input
-                placeholder={content}
-                name="content"
-                className="pl-3 border-2 rounded-lg h-14 border-emerald-200 "
-                onChange={getEditedTodo}
-              />
-              <div className="items-center justify-center w-full text-center">
-                <button
-                  onClick={submitEditedTodo}
-                  type="submit"
-                  className="w-20 h-8 mr-10 rounded-lg bg-zinc-100"
-                >
-                  수정하기
-                </button>
-                <button
-                  onClick={closeModal}
-                  type="button"
-                  className="w-20 h-8 rounded-lg bg-zinc-100"
-                >
-                  닫기
-                </button>
-              </div>
-            </form>
+            <EditTodoForm
+              submitEditedTodo={submitEditedTodo}
+              title={title}
+              getEditedTodo={getEditedTodo}
+              content={content}
+              submitEditedTo
+              closeModal={closeModal}
+            />
           </div>
         )}
 
