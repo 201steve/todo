@@ -9,8 +9,11 @@ const List = () => {
   const [todoList, setTodoList] = useState([]);
   const [isTodoModalOpend, setTodoModalIsOpend] = useState(false);
   const navigate = useNavigate();
-
   const { id } = useParams();
+
+  const selectedDetail = todoList.find((todo) => todo.id === id);
+
+  console.log(selectedDetail?.id === id);
 
   const goToSignIn = () => {
     navigate("signin");
