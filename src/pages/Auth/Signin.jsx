@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { RULES } from "./components/RULES";
+import HighOrderInput from "./components/HighOrderInput";
 
-const Signin = () => {
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
-  });
+const INITIAL_STATE = {
+  email: "",
+  password: "",
+};
+
+export default function Signin() {
+  const [userInfo, setUserInfo] = useState(INITIAL_STATE);
   const { email, password } = userInfo;
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const getUserInfo = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  const validation = email.includes("@") && password.length >= 8;
-
+  // console.log(isAllValid);
+  const isAllValid = Object.entries(userInfo).every(([key, value]) => RULES[key].pattern(value));
+  console.log(isAllValid);
   const signUp = async (e) => {
     e.preventDefault();
     const response = await fetch("http://localhost:8080/users/login", {
@@ -49,30 +54,30 @@ const Signin = () => {
       <h1 className="mb-5 text-md">로그인</h1>
 
       <form className="flex flex-col" onSubmit={signUp}>
-        <input
+        <HighOrderInput
           placeholder="ID"
           type="email"
-          value={email}
           name="email"
+          value={email}
           onChange={getUserInfo}
           className={`p-3 px-4 border-2 w-[300px] ${
-            email.includes("@") && "border-emerald-200"
+            RULES.email.pattern(email) && "border-emerald-200"
           } rounded-md mb-5 focus:outline-none `}
         />
-        <input
+        <HighOrderInput
           placeholder="PASSWORD"
           type="password"
-          value={password}
           name="password"
+          value={password}
           onChange={getUserInfo}
           className={`py-3 px-4 border-2 w-[300px] ${
-            password.length >= 8 && "border-emerald-200"
+            RULES.password.pattern(password) && "border-emerald-200"
           } rounded-md mb-5 focus:outline-none`}
         />
         <button
           className="rounded-md disabled:bg-red-100 enabled:bg-emerald-100 enabled:active:bg-emerald-300 "
           type="submit"
-          disabled={!validation}
+          disabled={!isAllValid}
           onClick={signUp}
         >
           로그인
@@ -86,6 +91,4 @@ const Signin = () => {
       </p>
     </div>
   );
-};
-
-export default Signin;
+}

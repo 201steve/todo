@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../../api/api";
+import HighOrderInput from "./components/HighOrderInput";
 
 const Auth = () => {
   const [userInfo, setUserInfo] = useState({
@@ -31,7 +32,7 @@ const Auth = () => {
       <h1 className="mb-5 text-md">회원가입</h1>
 
       <form className="flex flex-col">
-        <input
+        <HighOrderInput
           placeholder="ID"
           type="email"
           value={email}
@@ -41,7 +42,7 @@ const Auth = () => {
             email.includes("@") && "border-emerald-200"
           } rounded-md mb-5 focus:outline-none `}
         />
-        <input
+        <HighOrderInput
           placeholder="PASSWORD"
           type="password"
           value={password}
