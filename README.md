@@ -19,8 +19,9 @@
 | [5216eca](https://github.com/201steve/todo/pull/8/commits/5216eca39996e3ff7ef41165ad8d1599cf379a26) | label태그 삭제, 체크박스에 체크 되야 detail이 보이던 방식에서 todo 클릭 하면 보이는것으로 수정, detail 닫기 버튼 추가 ,title의길이가 특정 index이상 되면 ... 으로 collapse되게 view 수정, input scale transition 삭제 |
 | [34eecbf](https://github.com/201steve/todo/pull/8/commits/34eecbf49b4ba5d9c6cbb08681dcf4fde868a9ce) | create todo 기능 추가| 
 | [5229454](https://github.com/201steve/todo/pull/8/commits/52294540ecbd2d5b1ee2bb2cafa2e1e6e6e0f0f0) | delete 버튼을 누르면 todo 삭제 되는 기능 추가 ,delete 버튼을 누르고 삭제되면 re-render되도록 setState 구성 ,createTodo 하면re-render 되도록setState수정, update 용도 modal 구현중 | 
-|5b96eb3233c2e50a5ec92905bef85e67044573ff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| todo update 기능 추가 | 
+|[5b96eb3](https://github.com/201steve/todo/pull/9/commits/5b96eb3233c2e50a5ec92905bef85e67044573ff)| todo update 기능 추가 | 
 |536dbc77e812f2f3f759018c37aadf52dcd83487 | 새로고침해도 유지되도록 기능 추가 |
+
 
 ## Assignment 1 - Login / SignUp
 
