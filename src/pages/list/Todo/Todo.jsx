@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiEdit, CiSquareRemove } from "react-icons/ci";
-import { api } from "../../../api/api";
 import EditTodoForm from "./EditTodoForm/EditTodoForm";
+import { client } from "api/client";
 
-const Todo = ({ id, title, displayDetail, deleteTodo, content, todoList, setTodoList }) => {
+const Todo = ({ id, title, deleteTodo, content, todoList, setTodoList }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editedTodo, setEditedTodo] = useState({ id: "", title: "", content: "" });
   const navigate = useNavigate();
@@ -27,35 +27,50 @@ const Todo = ({ id, title, displayDetail, deleteTodo, content, todoList, setTodo
     setIsEdit((prev) => !prev);
   };
 
+  // const updateElement = (updatedTodo) => {
+  //   const editedIndex = todoList.findIndex(({ id }) => id === updatedTodo.id);
+  //   if (editedIndex !== -1) {
+  //     const updatedTodoList = [...todoList];
+  //     updatedTodoList[editedIndex] = updatedTodo;
+  //     setTodoList(updatedTodoList);
+  //   }
+  // };
+
   const updateElement = (updatedTodo) => {
-    const editedIndex = todoList.findIndex(({ id }) => id === updatedTodo.data.id);
-    if (editedIndex !== -1) {
-      const updatedTodoList = [...todoList];
-      updatedTodoList[editedIndex] = updatedTodo.data;
-      setTodoList(updatedTodoList);
-    }
+    setTodoList((prevTodoList) => {
+      const editedIndex = prevTodoList.findIndex(({ id }) => id === updatedTodo.id);
+      if (editedIndex !== -1) {
+        const updatedTodoList = [...prevTodoList];
+        updatedTodoList[editedIndex] = updatedTodo;
+        return updatedTodoList;
+      } else {
+        return prevTodoList;
+      }
+    });
   };
 
   const submitEditedTodo = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${api.updateTodo(id)}`, {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.getItem("todo-token"),
-      },
-      body: JSON.stringify({ title: editedTodo.title, content: editedTodo.content }),
-    });
-    const updatedTodo = await response.json();
-    updateElement(updatedTodo);
-
+    const response = await client.updateTodo(editedTodo.id, editedTodo.title, editedTodo.content);
+    // const response = await fetch(`${api.updateTodo(id)}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-type": "application/json",
+    //     Authorization: localStorage.getItem("todo-token"),
+    //   },
+    //   body: JSON.stringify({ title: editedTodo.title, content: editedTodo.content }),
+    // });
+    updateElement(response.data.data);
+    console.log(response);
     setIsEdit((prev) => !prev);
   };
 
   return (
     <div onClick={selectTodo} className="flex items-center justify-between h-10 mb-5 group">
       <div
-        onClick={displayDetail}
+        onClick={() => {
+          navigate(`/${id}`);
+        }}
         className="flex items-center w-full h-10 py-5 ml-5 border-2 rounded-lg border-emerald-200 active:bg-emerald-100"
       >
         <input type="checkbox" className="mx-5" />
