@@ -1,52 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Todo from "./Todo/Todo";
-import { api } from "../../api/api";
 import TodoModal from "./TodoModal/TodoModal";
 import TodoDetail from "./TodoDetail/TodoDetail";
+import { client } from "api/client";
 
 const List = () => {
   const [todoList, setTodoList] = useState([]);
-  const [isTodoSelected, setIsTodoSelected] = useState(false);
   const [isTodoModalOpend, setTodoModalIsOpend] = useState(false);
-
+  console.log(todoList);
   const navigate = useNavigate();
+
   const { id } = useParams();
-
-  const selectedDetail = todoList.find((todo) => todo.id === id);
-
-  console.log(selectedDetail?.id === id);
-
-  const getTodo = async (url, option) => {
-    const response = await fetch(url, option);
-    const todoData = await response.json();
-    setTodoList(todoData.data);
-  };
 
   const goToSignIn = () => {
     navigate("signin");
-  };
-
-  const displayDetail = () => {
-    setIsTodoSelected(true);
-  };
-  const hiddenDetail = () => {
-    setIsTodoSelected(false);
   };
 
   const toggleTodoModal = () => {
     setTodoModalIsOpend((prev) => !prev);
   };
 
+  const getTodo = async () => {
+    const response = await client.getTodos();
+    setTodoList(response.data.data);
+  };
+
   const deleteTodo = async (e, selectedId) => {
-    const response = await fetch(`${api.deleteTodo(selectedId)}`, {
-      method: "DELETE",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: localStorage.getItem("todo-token"),
-      },
-    });
-    if (response.ok) {
+    const response = await client.deleteTodo(selectedId);
+    if (response.statusText === "OK") {
       const filteredList = todoList.filter((list) => list.id !== selectedId);
       setTodoList(filteredList);
     }
@@ -57,25 +39,15 @@ const List = () => {
       alert("로그인이 필요합니다");
       navigate("/signin");
     }
-    getTodo(api.getTodos, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json;charset=utf-8",
-        Authorization: localStorage.getItem("todo-token"),
-      },
-    });
+    getTodo();
   }, []);
-
-  useEffect(() => {
-    if (todoList.length === 0) setIsTodoSelected(false);
-  }, [todoList]);
 
   return (
     <div className="relative max-w-2xl pb-10 m-10 border-2 rounded-lg">
       <div className="w-full p-4 text-right">
         <button
           onClick={goToSignIn}
-          className="px-3 py-1 mr-3 rounded-lg text-md bg-zinc-100 active:bg-zinc-300 active:text-white"
+          className="px-3 py-1 rounded-lg text-md bg-zinc-100 active:bg-zinc-300 active:text-white"
         >
           Login
         </button>
@@ -96,12 +68,11 @@ const List = () => {
           title={title}
           content={content}
           todoList={todoList}
-          displayDetail={displayDetail}
           deleteTodo={deleteTodo}
           setTodoList={setTodoList}
         />
       ))}
-      {id ? <TodoDetail todoList={todoList} hiddenDetail={hiddenDetail} /> : null}
+      {id && <TodoDetail todoList={todoList} />}
     </div>
   );
 };
