@@ -1,47 +1,33 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { CiEdit, CiSquareRemove } from "react-icons/ci";
 import EditTodoForm from "./EditTodoForm/EditTodoForm";
-import { client } from "api/client";
+import { todoApi } from "services/todoApi";
 
-const Todo = ({ id, title, deleteTodo, content, todoList, setTodoList }) => {
+const Todo = ({ id, title, deleteTodo, content, selectTodo, setTodoList }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editedTodo, setEditedTodo] = useState({ id: "", title: "", content: "" });
-  const navigate = useNavigate();
 
   const getEditedTodo = (e) => {
     const { name, value } = e.target;
     setEditedTodo({ ...editedTodo, [name]: value });
   };
 
-  const toggleEdit = (e, selectedId) => {
+  const toggleEdit = (selectedId) => {
     setEditedTodo({ ...editedTodo, id: selectedId });
     setIsEdit((prev) => !prev);
   };
 
-  const selectTodo = (e) => {
-    navigate(`/${id}`);
-  };
-
   const closeModal = () => {
-    setIsEdit((prev) => !prev);
+    setIsEdit(false);
   };
-
-  // const updateElement = (updatedTodo) => {
-  //   const editedIndex = todoList.findIndex(({ id }) => id === updatedTodo.id);
-  //   if (editedIndex !== -1) {
-  //     const updatedTodoList = [...todoList];
-  //     updatedTodoList[editedIndex] = updatedTodo;
-  //     setTodoList(updatedTodoList);
-  //   }
-  // };
 
   const updateElement = (updatedTodo) => {
     setTodoList((prevTodoList) => {
-      const editedIndex = prevTodoList.findIndex(({ id }) => id === updatedTodo.id);
-      if (editedIndex !== -1) {
-        const updatedTodoList = [...prevTodoList];
-        updatedTodoList[editedIndex] = updatedTodo;
+      const matchedTodo = prevTodoList.find((todo) => todo.id === updatedTodo.id);
+      if (matchedTodo) {
+        const updatedTodoList = prevTodoList.map((todo) =>
+          todo.id === updatedTodo.id ? updatedTodo : todo
+        );
         return updatedTodoList;
       } else {
         return prevTodoList;
@@ -51,36 +37,25 @@ const Todo = ({ id, title, deleteTodo, content, todoList, setTodoList }) => {
 
   const submitEditedTodo = async (e) => {
     e.preventDefault();
-    const response = await client.updateTodo(editedTodo.id, editedTodo.title, editedTodo.content);
-    // const response = await fetch(`${api.updateTodo(id)}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //     Authorization: localStorage.getItem("todo-token"),
-    //   },
-    //   body: JSON.stringify({ title: editedTodo.title, content: editedTodo.content }),
-    // });
+    const response = await todoApi.updateTodo(editedTodo.id, editedTodo.title, editedTodo.content);
     updateElement(response.data.data);
-    console.log(response);
     setIsEdit((prev) => !prev);
   };
 
   return (
-    <div onClick={selectTodo} className="flex items-center justify-between h-10 mb-5 group">
+    <div className="flex items-center justify-between h-10 mb-5 group">
       <div
-        onClick={() => {
-          navigate(`/${id}`);
-        }}
+        onClick={() => selectTodo(id)}
         className="flex items-center w-full h-10 py-5 ml-5 border-2 rounded-lg border-emerald-200 active:bg-emerald-100"
       >
-        <input type="checkbox" className="mx-5" />
+        <input name="completionStatus" type="checkbox" className="mx-5" />
         <p type="text" className="duration-150 focus:outline-none focus:scale-110">
           {title}
         </p>
       </div>
       <div className="flex items-center justify-center ">
         <CiEdit
-          onClick={(e) => toggleEdit(e, id)}
+          onClick={() => toggleEdit(id)}
           className="mr-3 text-green-700 duration-150 hover:scale-125 "
           size="30px"
         />
@@ -101,7 +76,7 @@ const Todo = ({ id, title, deleteTodo, content, todoList, setTodoList }) => {
         )}
 
         <CiSquareRemove
-          onClick={(e) => deleteTodo(e, id)}
+          onClick={() => deleteTodo(id)}
           className="mr-5 text-red-700 duration-150 hover:scale-125"
           size="30px"
         />

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Todo from "./Todo/Todo";
 import TodoModal from "./TodoModal/TodoModal";
+import Todo from "./Todo/Todo";
 import TodoDetail from "./TodoDetail/TodoDetail";
-import { client } from "api/client";
+import { todoApi } from "services/todoApi";
 
 const List = () => {
   const [todoList, setTodoList] = useState([]);
   const [isTodoModalOpend, setTodoModalIsOpend] = useState(false);
-  console.log(todoList);
+
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -22,23 +22,25 @@ const List = () => {
   };
 
   const getTodo = async () => {
-    const response = await client.getTodos();
+    const response = await todoApi.getTodo();
     setTodoList(response.data.data);
   };
 
-  const deleteTodo = async (e, selectedId) => {
-    const response = await client.deleteTodo(selectedId);
-    if (response.statusText === "OK") {
-      const filteredList = todoList.filter((list) => list.id !== selectedId);
-      setTodoList(filteredList);
+  const deleteTodo = async (selectedId) => {
+    try {
+      await todoApi.deleteTodo(selectedId);
+      setTodoList((prev) => prev.filter((list) => list.id !== selectedId));
+      navigate("/");
+    } catch (error) {
+      console.error(error);
     }
   };
 
+  const selectTodo = (id) => {
+    navigate(`/${id}`);
+  };
+
   useEffect(() => {
-    if (!localStorage.getItem("todo-token")) {
-      alert("로그인이 필요합니다");
-      navigate("/signin");
-    }
     getTodo();
   }, []);
 
@@ -59,7 +61,11 @@ const List = () => {
         </button>
       </div>
       {isTodoModalOpend && (
-        <TodoModal setTodoModalIsOpend={setTodoModalIsOpend} setTodoList={setTodoList} />
+        <TodoModal
+          setTodoModalIsOpend={setTodoModalIsOpend}
+          toggleTodoModal={toggleTodoModal}
+          setTodoList={setTodoList}
+        />
       )}
       {todoList?.map(({ id, title, content }) => (
         <Todo
@@ -67,9 +73,9 @@ const List = () => {
           id={id}
           title={title}
           content={content}
-          todoList={todoList}
           deleteTodo={deleteTodo}
           setTodoList={setTodoList}
+          selectTodo={selectTodo}
         />
       ))}
       {id && <TodoDetail todoList={todoList} />}

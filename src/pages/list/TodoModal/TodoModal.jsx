@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
-import { client } from "api/client";
+import { todoApi } from "services/todoApi";
 
-const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
+const TodoModal = ({ toggleTodoModal, setTodoList }) => {
   const [todo, setTodo] = useState({ title: "", content: "" });
 
   const { title, content } = todo;
 
-  const modalRef = useRef(null);
+  const autoFocus = useRef(null);
 
   const getNewTodo = ({ target: { placeholder, value } }) => {
     setTodo({ ...todo, [placeholder]: value });
@@ -14,14 +14,14 @@ const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
 
   const createTodo = async (e) => {
     e.preventDefault();
-    const response = await client.createTodo(title, content);
+    const response = await todoApi.createTodo(title, content);
     alert("todo가 생성되었습니다");
-    setTodoModalIsOpend((prev) => !prev);
+    toggleTodoModal();
     setTodoList((prev) => [...prev, response.data.data]);
   };
 
   useEffect(() => {
-    modalRef.current.focus();
+    autoFocus.current.focus();
   }, []);
 
   return (
@@ -32,15 +32,17 @@ const TodoModal = ({ setTodoModalIsOpend, setTodoList }) => {
       >
         <input
           onChange={getNewTodo}
-          ref={modalRef}
+          ref={autoFocus}
           value={title}
           placeholder="title"
+          name="titleInput"
           className="w-full h-8 pl-3 my-3 rounded-lg"
         />
         <input
           onChange={getNewTodo}
           value={content}
           placeholder="content"
+          name="detailInput"
           className="w-full h-8 pl-3 mb-3 rounded-lg"
         />
         <button

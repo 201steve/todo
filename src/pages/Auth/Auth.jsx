@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { api } from "../../api/api";
+import { authApi } from "services/authApi";
 
 const Auth = () => {
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
   });
+
   const { email, password } = userInfo;
 
   const getUserInfo = (e) => {
@@ -14,20 +15,19 @@ const Auth = () => {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  const validation = email.includes("@") && password.length >= 8;
+  const isSubmitEnabled = email.includes("@") && password.length >= 8;
 
   const signUp = async () => {
-    const response = await fetch(api.signUp, {
-      method: "POST",
-      headers: { "Content-type": "application/json;charset=utf-8" },
-      body: JSON.stringify(userInfo),
-    });
-    const createdUser = await response.json();
-    alert(createdUser.message);
+    try {
+      const response = await authApi.signUp(email, password);
+      alert(response.data.message);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen max-w-md p-10 border-none">
+    <div className="flex flex-col items-center justify-center h-screen max-w-md p-10 border-none">
       <h1 className="mb-5 text-md">회원가입</h1>
 
       <form className="flex flex-col">
@@ -52,9 +52,9 @@ const Auth = () => {
           } rounded-md mb-5 focus:outline-none`}
         />
         <button
-          className="disabled:bg-red-100 enabled:bg-emerald-100 enabled:active:bg-emerald-300 rounded-md "
+          className="rounded-md disabled:bg-red-100 enabled:bg-emerald-100 enabled:active:bg-emerald-300 "
           type="button"
-          disabled={!validation}
+          disabled={!isSubmitEnabled}
           onClick={signUp}
         >
           회원가입
@@ -62,7 +62,7 @@ const Auth = () => {
       </form>
       <p className="mt-10">
         회원가입 했다면?{" "}
-        <Link className="border-b-2 border-b-emerald-200 px-2 py-1 " to="/signin">
+        <Link className="px-2 py-1 border-b-2 border-b-emerald-200 " to="/signin">
           로그인하러 가기
         </Link>
       </p>
