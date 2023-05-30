@@ -11,7 +11,9 @@ const TodoDetail = ({ todoList }) => {
         {selectedTodo?.content || "todoDetail입니다"}
       </p>
       <button
-        onClick={() => navigate("/")}
+        onClick={() => {
+          navigate("/");
+        }}
         className="w-1/6 h-10 ml-5 text-sm rounded-lg bg-zinc-100 active:bg-zinc-300 active:text-white"
       >
         닫기
