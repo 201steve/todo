@@ -12,18 +12,18 @@
 
 ## 개발 내용
 
-| commit                                                                                               | Detail                                                                                                                                                                                                                |
-| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [48fdafe](https://github.com/201steve/todo/pull/8/commits/48fdafe4f05839682faa40867c3ac4c35bcaea37)  | layout signup, signin, add login validate,토큰 여부에 따른 route 처리 추가                                                                                                                                            |
-| [3095ef7](https://github.com/201steve/todo/pull/8/commits/3095ef7e8461c26be34b27ab35e3b9dd54844b49)  | api주소 관리용 파일 추가, 토큰 유효하지않다면 로그인페이지로 리다이렉트 추가                                                                                                                                          |
-| [d5baa95](https://github.com/201steve/todo/pull/8/commits/d5baa9549fc9af43d99677a2cb6e3a196a70c0b6)  | 특정 todo를 선택하면, 상세내역 출력                                                                                                                                                                                   |
-| [5216eca](https://github.com/201steve/todo/pull/8/commits/5216eca39996e3ff7ef41165ad8d1599cf379a26)  | label태그 삭제, 체크박스에 체크 되야 detail이 보이던 방식에서 todo 클릭 하면 보이는것으로 수정, detail 닫기 버튼 추가 ,title의길이가 특정 index이상 되면 ... 으로 collapse되게 view 수정, input scale transition 삭제 |
-| [34eecbf](https://github.com/201steve/todo/pull/8/commits/34eecbf49b4ba5d9c6cbb08681dcf4fde868a9ce)  | create todo 기능 추가                                                                                                                                                                                                 |
-| [5229454](https://github.com/201steve/todo/pull/8/commits/52294540ecbd2d5b1ee2bb2cafa2e1e6e6e0f0f0)  | delete 버튼을 누르면 todo 삭제 되는 기능 추가 ,delete 버튼을 누르고 삭제되면 re-render되도록 setState 구성 ,createTodo 하면re-render 되도록setState수정, update 용도 modal 구현중                                     |
-| 5b96eb3233c2e50a5ec92905bef85e67044573ff&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | todo update 기능 추가                                                                                                                                                                                                 |
-| 536dbc77e812f2f3f759018c37aadf52dcd83487                                                             | 새로고침해도 유지되도록 기능 추가                                                                                                                                                                                     |
-| https://github.com/201steve/todo/pull/9/commits/e76c6a58b03c967e7811f62490026412a5dcd51b             | axios로 전환, 불필요 state 삭제, detail 여부에 따라 조건부 렌더링으로 변경                                                                                                                                            |
-| https://github.com/201steve/todo/pull/9/commits/e04b37dd52e0acd73a7da3d9d9ce6c2e11ccd947             | service code 분리, 로그인 여부에 따른 privateRouter 설정, axios interceptors추가로 instance request 전 header에 Authorization token update                                                                            |
+| commit                                                                                              | Detail                                                                                                                                                                                                                |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [48fdafe](https://github.com/201steve/todo/pull/8/commits/48fdafe4f05839682faa40867c3ac4c35bcaea37) | layout signup, signin, add login validate,토큰 여부에 따른 route 처리 추가                                                                                                                                            |
+| [3095ef7](https://github.com/201steve/todo/pull/8/commits/3095ef7e8461c26be34b27ab35e3b9dd54844b49) | api주소 관리용 파일 추가, 토큰 유효하지않다면 로그인페이지로 리다이렉트 추가                                                                                                                                          |
+| [d5baa95](https://github.com/201steve/todo/pull/8/commits/d5baa9549fc9af43d99677a2cb6e3a196a70c0b6) | 특정 todo를 선택하면, 상세내역 출력                                                                                                                                                                                   |
+| [5216eca](https://github.com/201steve/todo/pull/8/commits/5216eca39996e3ff7ef41165ad8d1599cf379a26) | label태그 삭제, 체크박스에 체크 되야 detail이 보이던 방식에서 todo 클릭 하면 보이는것으로 수정, detail 닫기 버튼 추가 ,title의길이가 특정 index이상 되면 ... 으로 collapse되게 view 수정, input scale transition 삭제 |
+| [34eecbf](https://github.com/201steve/todo/pull/8/commits/34eecbf49b4ba5d9c6cbb08681dcf4fde868a9ce) | create todo 기능 추가                                                                                                                                                                                                 |
+| [5229454](https://github.com/201steve/todo/pull/8/commits/52294540ecbd2d5b1ee2bb2cafa2e1e6e6e0f0f0) | delete 버튼을 누르면 todo 삭제 되는 기능 추가 ,delete 버튼을 누르고 삭제되면 re-render되도록 setState 구성 ,createTodo 하면re-render 되도록setState수정, update 용도 modal 구현중                                     |
+| [853ce94](https://github.com/201steve/todo/commit/853ce94db778dc608639896154526350968fe9c7)         | todo update 기능 추가                                                                                                                                                                                                 |
+| [859ae90](https://github.com/201steve/todo/commit/859ae90012d7d20be928dece876b6b9b7cd2c920)         | 새로고침해도 유지되도록 기능 추가                                                                                                                                                                                     |
+| [e76c6a5](https://github.com/201steve/todo/pull/9/commits/e76c6a58b03c967e7811f62490026412a5dcd51b) | axios로 전환, 불필요 state 삭제, detail 여부에 따라 조건부 렌더링으로 변경                                                                                                                                            |
+| [e04b37d](https://github.com/201steve/todo/pull/9/commits/e04b37dd52e0acd73a7da3d9d9ce6c2e11ccd947) | service code 분리, 로그인 여부에 따른 privateRouter 설정, axios interceptors추가로 instance request 전 header에 Authorization token update                                                                            |
 
 ## Assignment 1 - Login / SignUp
 
@@ -66,3 +66,37 @@
 - 이전까지는 특정페이지에 접근했을 때 로그인 여부를 판단해서 일단 useEffect가 돌기 전에 렌더부터된 화면이 노출됐었는데, PrivateRouter로 경로 설정하는걸 알게되서, 애시당초 로그인 여부를 Router에서 판단해 진입조차 안되도록 수정.
 - 로그아웃된상태에서 로그인을하면 리스트로 보내지도록 구성했는데, 리스트로와서 꼭 새로고침 한번을 해야 했다. 원인은 localstorage에 값이 초기엔 null이라 unAuthorization 인것. 그래서 리스트 컴포넌트가 마운트되고-> JSX render->get 요청에서 get요청이 안됐던것. 해결은, axios에 interceptors라는 방법으로 해결. interceptors가 하는일은 api request 하기전, response 받기 전에 특정 동작을 수행할 수 있는데, list페이지로 넘어와서 get 요청하기전에 interceptors가 낚아채서 headers에 있는 Authorization 값을 null에서 JWT로 갈아끼우고 api call 하는 순서로 진행되어 이상없이 list에 todoList 렌더..
 - 다른 api call은 다 잘됐는데, 유난히 signup할때만 안되더라. 그래서 인스턴스에 config를 봤더니, baseUrl로 되어있던것...ㅠㅠㅠㅠㅠ4시간날림...`baseURL`이다..
+- update할 때 findIndex로 배열의 index를 찾아서 값을 갈아끼우는 방식이었는데, 조건이 이중부정으로 어색했음.
+
+```javascript
+const updateElement = (updatedTodo) => {
+    setTodoList((prevTodoList) => {
+      const editedIndex = prevTodoList.findIndex(({ id }) => id === updatedTodo.id);
+      if (editedIndex !== -1)//이중부정 {
+        const updatedTodoList = [...prevTodoList];
+        updatedTodoList[editedIndex] = updatedTodo;
+        return updatedTodoList;
+      } else {
+        return prevTodoList;
+      }
+    });
+  };
+```
+
+- find메서드로 해당 요소를 직접찾아 원본배열과 선택된 배열의 id를 비교해서 같으면 업데이트한 요소로, 아니면 원본 요소로 반환하도록 수정.
+
+```javascript
+const updateElement = (updatedTodo) => {
+  setTodoList((prevTodoList) => {
+    const matchedTodo = prevTodoList.find((todo) => todo.id === updatedTodo.id);
+    if (matchedTodo) {
+      const updatedTodoList = prevTodoList.map((todo) =>
+        todo.id === updatedTodo.id ? updatedTodo : todo
+      );
+      return updatedTodoList;
+    } else {
+      return prevTodoList;
+    }
+  });
+};
+```
